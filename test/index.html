@@ -7,16 +7,43 @@
 <body>
   <div id="mocha"></div>
 
-  <script src="https://cdn.rawgit.com/jquery/jquery/2.1.4/dist/jquery.min.js"></script>
   <script src="https://cdn.rawgit.com/Automattic/expect.js/0.3.1/index.js"></script>
   <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sinon@3/pkg/sinon.js"></script>
 
-  <script>mocha.setup({ui: 'bdd', globals: ['___browserSync___oldSocketIo', 'io', '___browserSync___']})</script>
-  <script type="text/javascript" src="../js/script.js"></script>
+  <script>mocha.setup({ui: 'bdd'})</script>
+  <script type="text/javascript" src="../js/checkAge.js"></script>
   <script type="text/javascript">
     describe('#check pesel', function() {
-      it('PESEL 0113101k457 - couse alert "Błędny numer"', function() {
-        expect(checkPesel()).to.equal('Błędny numer')
+
+      var alert
+      var con
+
+      beforeEach(function() {
+        alert = sinon.stub(window, "alert").callsFake(function(msg) { return false; } );
+        con = sinon.stub(console, "log").callsFake(function(msg) { return false; } );
+      })
+
+      afterEach(function() {
+        window.alert.restore();
+        console.log.restore();
+      })
+
+      describe('Invalid PESEL', function() {
+        it('PESEL 0113101k457 - couse alert "Błędny numer"', function() {
+          checkAge('0113101k457')
+
+          expect(alert.calledWith("PESEL nieprawidłowy - sprawdź cyfry")).to.be(true)
+        });
+      })
+
+      describe('Valid PESEL', function() {
+        it('PESEL 83031813892 - returns 34"', function() {
+          var ret = checkAge('83031813892')
+
+          expect(console.log.called).to.be.ok
+          expect(ret).to.eql({ yearPesel: 1983, monthPesel: 3, dayPesel: 18 })
+        });
       });
     })
   </script>
