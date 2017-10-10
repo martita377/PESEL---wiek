@@ -7,7 +7,7 @@
 <body>
   <div id="mocha"></div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/4.0.1/mocha.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/4.0.1/mocha.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sinon.js/4.0.1/sinon.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.1.2/chai.min.js"></script>
   <script src="./vendor/sinon-chai.js"></script>
@@ -19,21 +19,9 @@
 
     describe('#check pesel', function() {
 
-      beforeEach(function() {
-        sinon.stub(window, "alert");
-        sinon.stub(console, "log");
-      })
-
-      afterEach(function() {
-        window.alert.restore();
-        console.log.restore();
-      })
-
       describe('Invalid PESEL', function() {
-        it('PESEL 0113101k457 - couse alert "Błędny numer"', function() {
-          checkAge('0113101k457');
-
-          expect(window.alert).to.have.been.calledWith("PESEL nieprawidłowy - sprawdź cyfry");
+        it('PESEL 0113101k457 - throws error', function() {
+          expect(function() {checkAge('0113101k457')}).to.throw('PESEL nieprawidłowy - sprawdź cyfry');
         });
       });
 

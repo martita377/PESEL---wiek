@@ -1,12 +1,17 @@
-checkPesel(prompt("Podaj nr PESEL", "11 cyfr"));
+try {
+    alert('Twój wiek w latach: ' + checkPesel(prompt("Podaj nr PESEL", "11 cyfr")));
+} catch (e) {
+    alert(e.message)
+}
+
 
 function checkPesel(pesel) {
     if (isNaN(Number(pesel))) {
-        alert('Błędny numer');
+        throw new Error('Błędny numer');
     } else if (pesel == null || pesel.length !== 11) {
-        alert('Nieprawidłowa ilość cyfr');
-    } else /*if (checkAge() != undefined)*/ {
-        alert('Twój wiek w latach: ' + calculateAge(checkAge(pesel)));
+        throw new Error('Nieprawidłowa ilość cyfr');
+    } else {
+        return calculateAge(checkAge(pesel));
     }
 }
 

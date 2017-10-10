@@ -6,12 +6,11 @@ function checkAge(pesel) {
     }
     var monthPesel = Number(pesel.substr(2, 2));
     if ((monthPesel == 0) || (monthPesel > 12)) {
-        alert('PESEL nieprawidłowy - sprawdź cyfry');
-        return;
+        throw new Error('PESEL nieprawidłowy - sprawdź cyfry');
     }
     var dayPesel = Number(pesel.substr(4, 2));
     if ((dayPesel == 0) || (dayPesel > 31)) {
-        alert('PESEL nieprawidłowy - sprawdź cyfrę 5. i 6.');
+        throw new Error('PESEL nieprawidłowy - sprawdź cyfrę 5. i 6.');
         return;
     }
 
