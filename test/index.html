@@ -2,26 +2,26 @@
 <head>
   <meta charset="utf-8">
   <title>Mocha Tests</title>
-  <link href="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mocha/4.0.1/mocha.css" rel="stylesheet">
 </head>
 <body>
   <div id="mocha"></div>
 
-  <script src="https://cdn.rawgit.com/Automattic/expect.js/0.3.1/index.js"></script>
-  <script src="https://cdn.rawgit.com/mochajs/mocha/2.2.5/mocha.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sinon@3/pkg/sinon.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/4.0.1/mocha.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/sinon.js/4.0.1/sinon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chai/4.1.2/chai.min.js"></script>
+  <script src="./vendor/sinon-chai.js"></script>
 
   <script>mocha.setup({ui: 'bdd'})</script>
   <script type="text/javascript" src="../js/checkAge.js"></script>
   <script type="text/javascript">
+    var expect = chai.expect
+
     describe('#check pesel', function() {
 
-      var alert
-      var con
-
       beforeEach(function() {
-        alert = sinon.stub(window, "alert").callsFake(function(msg) { return false; } );
-        con = sinon.stub(console, "log").callsFake(function(msg) { return false; } );
+        sinon.stub(window, "alert").callsFake(function(msg) { return false; } );
+        sinon.stub(console, "log").callsFake(function(msg) { return false; } );
       })
 
       afterEach(function() {
@@ -33,16 +33,15 @@
         it('PESEL 0113101k457 - couse alert "Błędny numer"', function() {
           checkAge('0113101k457')
 
-          expect(alert.calledWith("PESEL nieprawidłowy - sprawdź cyfry")).to.be(true)
+          expect(window.alert).to.have.been.calledWith("PESEL nieprawidłowy - sprawdź cyfry")
         });
       })
 
       describe('Valid PESEL', function() {
-        it('PESEL 83031813892 - returns 34"', function() {
+        it('PESEL 83031813892 - returns object"', function() {
           var ret = checkAge('83031813892')
 
-          expect(console.log.called).to.be.ok
-          expect(ret).to.eql({ yearPesel: 1983, monthPesel: 3, dayPesel: 18 })
+          expect(ret).to.have.keys('yearPesel', 'monthPesel', 'dayPesel')
         });
       });
     })

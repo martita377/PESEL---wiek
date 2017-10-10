@@ -21,5 +21,3 @@ function checkAge(pesel) {
       dayPesel: dayPesel
     }
 }
-
-checkAge('83031813892')

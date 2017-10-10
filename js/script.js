@@ -1,19 +1,10 @@
-// JS - PESEL 85050215487
+checkPesel(prompt("Podaj nr PESEL", "11 cyfr"));
 
-var pesel = prompt("Podaj nr PESEL", "11 cyfr");
-
-checkPesel();
-
-//Check PESEL number
-function checkPesel() {
+function checkPesel(pesel) {
     if (isNaN(Number(pesel))) {
-        var alert_1 = 'Błędny numer';
-        alert(alert_1);
-        return alert_1;
+        alert('Błędny numer');
     } else if (pesel == null || pesel.length !== 11) {
-        var alert_2 = 'Nieprawidłowa ilość cyfr';
-        alert(alert_2);
-        return alert_2;
+        alert('Nieprawidłowa ilość cyfr');
     } else /*if (checkAge() != undefined)*/ {
         alert('Twój wiek w latach: ' + calculateAge(checkAge(pesel)));
     }
@@ -30,11 +21,9 @@ function calculateAge(date) {
     var age = year - date.yearPesel;
     if ((date.monthPesel > month) || ((date.monthPesel == month) && (date.dayPesel > day))) {
         age += -1;
-        return age;
     } else if ((date.monthPesel == month) && (date.dayPesel == day)) {
         alert('Wszystkiego najlepszego w dniu urodzin!:)');
-        return age;
-    } else {
-        return age;
     }
+
+    return age;
 }
