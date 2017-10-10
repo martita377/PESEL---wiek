@@ -15,13 +15,13 @@
   <script>mocha.setup({ui: 'bdd'})</script>
   <script type="text/javascript" src="../js/checkAge.js"></script>
   <script type="text/javascript">
-    var expect = chai.expect
+    var expect = chai.expect;
 
     describe('#check pesel', function() {
 
       beforeEach(function() {
-        sinon.stub(window, "alert").callsFake(function(msg) { return false; } );
-        sinon.stub(console, "log").callsFake(function(msg) { return false; } );
+        sinon.stub(window, "alert");
+        sinon.stub(console, "log");
       })
 
       afterEach(function() {
@@ -31,17 +31,17 @@
 
       describe('Invalid PESEL', function() {
         it('PESEL 0113101k457 - couse alert "Błędny numer"', function() {
-          checkAge('0113101k457')
+          checkAge('0113101k457');
 
-          expect(window.alert).to.have.been.calledWith("PESEL nieprawidłowy - sprawdź cyfry")
+          expect(window.alert).to.have.been.calledWith("PESEL nieprawidłowy - sprawdź cyfry");
         });
-      })
+      });
 
       describe('Valid PESEL', function() {
         it('PESEL 83031813892 - returns object"', function() {
-          var ret = checkAge('83031813892')
+          var ret = checkAge('83031813892');
 
-          expect(ret).to.have.keys('yearPesel', 'monthPesel', 'dayPesel')
+          expect(ret).to.have.keys('yearPesel', 'monthPesel', 'dayPesel');
         });
       });
     })
